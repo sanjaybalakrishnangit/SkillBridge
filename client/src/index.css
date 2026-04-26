@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans antialiased;
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600
+      text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-300
+      focus:outline-none focus:ring-4 focus:ring-orange-500/50 
+      disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-xl hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center bg-white hover:bg-blue-50 active:bg-blue-100
+      text-blue-700 font-semibold py-2.5 px-5 rounded-xl border border-blue-600
+      transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center bg-red-500 hover:bg-red-600 active:bg-red-700
+      text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200
+      focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2;
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-slate-100 p-6
+      hover:shadow-md transition-shadow duration-300;
+  }
+
+  /* ── Form inputs ── */
+  .input-field {
+    @apply w-full px-4 py-2.5 border border-slate-200 rounded-xl
+      focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+      transition-all duration-200 bg-white text-slate-800 placeholder-slate-400 text-sm;
+  }
+
+  .input-modern {
+    @apply w-full px-4 py-3 border border-slate-200 rounded-2xl
+      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-[0_0_15px_rgba(37,99,235,0.2)] focus:border-transparent
+      transition-all duration-300 bg-white/70 backdrop-blur-sm text-slate-800 placeholder-slate-400 text-sm shadow-inner;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-slate-700 mb-1.5;
+  }
+
+  /* ── Badge ── */
+  .badge-verified {
+    @apply inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+
+  .badge-available {
+    @apply inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+
+  .badge-busy {
+    @apply inline-flex items-center gap-1 bg-red-100 text-red-600 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+}
+
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce-bell {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { opacity: 0.8; transform: scale(1.05); box-shadow: 0 0 10px 4px rgba(16, 185, 129, 0.2); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+.animate-bounce-bell {
+  animation: bounce-bell 1s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Star rating color */
+.star-filled { color: #f59e0b; }
