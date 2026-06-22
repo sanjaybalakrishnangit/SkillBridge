@@ -15,16 +15,16 @@
 @layer components {
   /* ── Buttons ── */
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600
+    @apply inline-flex items-center justify-center bg-gradient-to-r from-[#D97706] to-[#F59E0B]
       text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-300
-      focus:outline-none focus:ring-4 focus:ring-orange-500/50 
+      focus:outline-none focus:ring-4 focus:ring-[#D97706]/40 
       disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-xl hover:scale-105 active:scale-95;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center bg-white hover:bg-blue-50 active:bg-blue-100
-      text-blue-700 font-semibold py-2.5 px-5 rounded-xl border border-blue-600
-      transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2;
+    @apply inline-flex items-center justify-center bg-white hover:bg-slate-50 active:bg-slate-100
+      text-slate-800 font-semibold py-2.5 px-5 rounded-xl border border-slate-300
+      transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2;
   }
 
   .btn-danger {
@@ -42,13 +42,13 @@
   /* ── Form inputs ── */
   .input-field {
     @apply w-full px-4 py-2.5 border border-slate-200 rounded-xl
-      focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+      focus:outline-none focus:ring-2 focus:ring-[#D97706] focus:border-transparent
       transition-all duration-200 bg-white text-slate-800 placeholder-slate-400 text-sm;
   }
 
   .input-modern {
     @apply w-full px-4 py-3 border border-slate-200 rounded-2xl
-      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-[0_0_15px_rgba(37,99,235,0.2)] focus:border-transparent
+      focus:outline-none focus:ring-2 focus:ring-slate-900 focus:shadow-[0_0_15px_rgba(15,23,42,0.1)] focus:border-transparent
       transition-all duration-300 bg-white/70 backdrop-blur-sm text-slate-800 placeholder-slate-400 text-sm shadow-inner;
   }
 
@@ -59,6 +59,14 @@
   /* ── Badge ── */
   .badge-verified {
     @apply inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+
+  .badge-pending {
+    @apply inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center gap-1 bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full;
   }
 
   .badge-available {

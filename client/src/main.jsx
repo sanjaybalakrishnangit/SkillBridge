@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')).render(
             fontWeight: '500',
           },
           success: {
-            iconTheme: { primary: '#14b8a6', secondary: '#f1f5f9' },
+            iconTheme: { primary: '#D97706', secondary: '#f1f5f9' },
           },
           error: {
             iconTheme: { primary: '#ef4444', secondary: '#f1f5f9' },

@@ -90,16 +90,16 @@ const HomePage = () => {
   return (
     <main className="relative min-h-screen bg-slate-50 overflow-hidden">
       {/* ── Global Moving Background Blobs (Depth Layer) ── */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full mix-blend-multiply filter blur-[100px] animate-blob" />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-2000" />
-      <div className="absolute -bottom-32 left-1/2 w-96 h-96 bg-blue-600/10 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-4000" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#D97706]/5 rounded-full mix-blend-multiply filter blur-[100px] animate-blob" />
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-32 left-1/2 w-96 h-96 bg-slate-900/5 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-4000" />
 
       {/* ── Hero Section ── */}
-      <section className="relative min-h-screen flex flex-col justify-between pt-20 pb-0 z-10 bg-gradient-to-br from-blue-900 to-blue-600 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-between pt-20 pb-0 z-10 bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#334155] overflow-hidden">
         {/* Dark overlay & image for depth */}
-        <div className="absolute inset-0 bg-black/30 z-0"></div>
+        <div className="absolute inset-0 bg-black/40 z-0"></div>
         <div 
-          className="absolute inset-0 opacity-20 mix-blend-overlay bg-cover bg-center z-0" 
+          className="absolute inset-0 opacity-15 mix-blend-overlay bg-cover bg-center z-0" 
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=2000')" }}
         ></div>
 
@@ -110,15 +110,15 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-md text-blue-100 text-xs font-bold px-4 py-1.5 rounded-full mb-6 shadow-sm">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse-glow" />
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-md text-slate-100 text-xs font-bold px-4 py-1.5 rounded-full mb-6 shadow-sm">
+              <span className="w-2 h-2 bg-[#22C55E] rounded-full" />
               Professionals available near you
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight text-white drop-shadow-md">
               Connecting Skilled Talent
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-500">with Opportunities</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#D97706]">with Opportunities</span>
             </h1>
           </motion.div>
 
@@ -140,11 +140,11 @@ const HomePage = () => {
           >
             <form
               onSubmit={handleSearch}
-              className="flex flex-col sm:flex-row gap-3 bg-white/90 backdrop-blur-xl p-2.5 rounded-2xl border border-white/40 shadow-xl focus-within:ring-4 focus-within:ring-blue-500/30 focus-within:scale-[1.01] transition-all duration-300"
+              className="flex flex-col sm:flex-row gap-3 bg-white/90 backdrop-blur-xl p-2.5 rounded-2xl border border-white/40 shadow-xl focus-within:ring-4 focus-within:ring-[#D97706]/30 focus-within:scale-[1.01] transition-all duration-300"
             >
               <div className="relative flex-1">
                 <FiMapPin
-                  className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-600"
+                  className="absolute left-5 top-1/2 -translate-y-1/2 text-[#D97706]"
                   size={20}
                 />
                 <input
@@ -158,7 +158,7 @@ const HomePage = () => {
               </div>
               <button
                 type="submit"
-                className="bg-orange-500 text-white font-bold px-8 py-3.5 rounded-xl hover:bg-orange-600 transition-all duration-300 flex items-center justify-center gap-2 text-base hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
+                className="bg-gradient-to-r from-[#D97706] to-[#F59E0B] text-white font-bold px-8 py-3.5 rounded-xl hover:shadow-[#D97706]/30 transition-all duration-300 flex items-center justify-center gap-2 text-base hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
               >
                 <FiSearch size={18} />
                 Find Workers
@@ -178,7 +178,7 @@ const HomePage = () => {
         </div>
 
         {/* Stats strip */}
-        <div className="relative z-10 border-t border-white/10 bg-black/20 backdrop-blur-md w-full">
+        <div className="relative z-10 border-t border-white/10 bg-black/30 backdrop-blur-md w-full">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6">
             {STATS.map(({ label, end, suffix, icon }, index) => (
               <motion.div 
@@ -217,8 +217,8 @@ const HomePage = () => {
               onClick={() => setSkillFilter(skill)}
               className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                 skillFilter === skill
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
-                  : 'bg-white text-slate-600 hover:bg-blue-50 border border-slate-200 hover:border-blue-300'
+                  ? 'bg-[#0F172A] text-white shadow-md shadow-slate-900/10'
+                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 hover:border-slate-300'
               }`}
             >
               {skill}
@@ -232,10 +232,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
             <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-              <span className="text-blue-600">{workers.length}</span> professionals found
+              <span className="text-[#D97706]">{workers.length}</span> professionals found
             </h2>
             {isFiltered && (
-              <button onClick={handleClearFilters} className="text-sm text-slate-500 hover:text-blue-600 underline">
+              <button onClick={handleClearFilters} className="text-sm text-slate-500 hover:text-[#D97706] underline">
                 Clear filters
               </button>
             )}
@@ -249,8 +249,8 @@ const HomePage = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm max-w-2xl mx-auto"
             >
-              <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <FiBriefcase className="text-blue-500" size={32} />
+              <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FiBriefcase className="text-[#D97706]" size={32} />
               </div>
               <h3 className="text-2xl font-bold text-slate-800 mb-2">No professionals found</h3>
               <p className="text-slate-500 mb-8 max-w-md mx-auto">We couldn't find any professionals matching your current filters. Try adjusting your search criteria or explore all categories.</p>
@@ -281,16 +281,16 @@ const HomePage = () => {
       {(!user || user.role === 'user') && (
         <section className="py-20 relative z-10 bg-slate-100 mt-12">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-gradient-to-br from-blue-900 to-blue-700 rounded-3xl p-10 sm:p-16 text-center text-white shadow-2xl relative overflow-hidden group">
+            <div className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-10 sm:p-16 text-center text-white shadow-2xl relative overflow-hidden group">
               <div className="absolute inset-0 bg-white/5 w-full h-full transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none z-0"></div>
               <div className="relative z-10">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">Need a professional?</h2>
-                <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-slate-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                   Post your job requirements and get contacted by verified, skilled talent in your area.
                 </p>
                 <button 
                   onClick={() => navigate('/post-job')}
-                  className="bg-orange-500 text-white font-bold px-10 py-4 rounded-xl hover:bg-orange-600 transition-all duration-300 shadow-xl hover:-translate-y-1 hover:shadow-2xl text-lg relative z-20 cursor-pointer"
+                  className="bg-gradient-to-r from-[#D97706] to-[#F59E0B] text-white font-bold px-10 py-4 rounded-xl hover:shadow-[#D97706]/20 transition-all duration-300 shadow-xl hover:-translate-y-1 hover:shadow-2xl text-lg relative z-20 cursor-pointer"
                 >
                   Post a Job Now
                 </button>

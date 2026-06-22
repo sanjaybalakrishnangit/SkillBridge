@@ -9,6 +9,7 @@ const workerRoutes = require('./routes/workerRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const authRoutes = require('./routes/authRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/workers', workerRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', message: 'Local Worker Connector API is running' }));

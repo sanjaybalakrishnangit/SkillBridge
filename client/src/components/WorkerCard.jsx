@@ -3,7 +3,7 @@ import { MdVerified } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-const getSkillColor = () => 'bg-blue-50 text-blue-700 border border-blue-100 shadow-sm'
+const getSkillColor = () => 'bg-slate-100 text-slate-800 border border-slate-200 shadow-sm'
 
 const StarRating = ({ rating }) => {
   const stars = Math.round(rating)
@@ -12,7 +12,7 @@ const StarRating = ({ rating }) => {
       {[1, 2, 3, 4, 5].map((i) => (
         <svg
           key={i}
-          className={`w-3.5 h-3.5 ${i <= stars ? 'text-amber-400' : 'text-slate-200'}`}
+          className={`w-3.5 h-3.5 ${i <= stars ? 'text-[#F59E0B]' : 'text-slate-200'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -38,7 +38,7 @@ const WorkerCard = ({ worker }) => {
       className="card relative group hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-slate-100 overflow-hidden p-5 rounded-2xl"
     >
       {/* Subtle top gradient border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-400 opacity-80"></div>
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D97706] to-[#F59E0B] opacity-80"></div>
       
       {/* Header */}
       <div className="flex items-start gap-3 mb-4">
@@ -48,16 +48,16 @@ const WorkerCard = ({ worker }) => {
             <img
               src={photo}
               alt={name}
-              className="w-14 h-14 rounded-full object-cover border-[3px] border-white ring-2 ring-blue-100 shadow-md"
+              className="w-14 h-14 rounded-full object-cover border-[3px] border-white ring-2 ring-slate-100 shadow-md"
             />
           ) : (
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-xl shadow-md ring-2 ring-white border-[3px] border-blue-50">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#0F172A] to-[#1E293B] flex items-center justify-center text-white font-bold text-xl shadow-md ring-2 ring-white border-[3px] border-slate-50">
               {name?.charAt(0).toUpperCase()}
             </div>
           )}
           {/* Online dot */}
           {isAvailable && (
-            <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm animate-pulse-glow" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-sm" />
           )}
         </div>
 
@@ -67,7 +67,7 @@ const WorkerCard = ({ worker }) => {
             <h3 className="font-bold text-slate-800 truncate text-lg leading-tight">{name}</h3>
             {isVerified && (
               <MdVerified
-                className="text-green-500 flex-shrink-0 drop-shadow-[0_0_4px_rgba(34,197,94,0.4)]"
+                className="text-[#22C55E] flex-shrink-0"
                 size={18}
                 title="Verified Professional"
               />
@@ -95,12 +95,12 @@ const WorkerCard = ({ worker }) => {
       {/* Details */}
       <div className="space-y-2 mb-6">
         <div className="flex items-center gap-2 text-sm text-slate-500">
-          <FiMapPin size={14} className="text-blue-500 flex-shrink-0" />
+          <FiMapPin size={14} className="text-[#D97706] flex-shrink-0" />
           <span className="truncate">{location}</span>
         </div>
 
         <div className="flex items-center gap-2">
-          <FiStar size={13} className="text-amber-400 flex-shrink-0" />
+          <FiStar size={13} className="text-[#F59E0B] flex-shrink-0" />
           {rating > 0 ? (
             <div className="flex items-center gap-2">
               <StarRating rating={rating} />
@@ -112,7 +112,7 @@ const WorkerCard = ({ worker }) => {
         </div>
 
         {experience && (
-          <p className="text-xs text-slate-400 line-clamp-1 leading-relaxed">{experience}</p>
+          <p className="text-xs text-slate-500 line-clamp-1 leading-relaxed">{experience}</p>
         )}
       </div>
 

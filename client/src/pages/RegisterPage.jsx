@@ -49,7 +49,7 @@ const RegisterPage = () => {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center bg-teal-600 text-white w-16 h-16 rounded-2xl mb-4 shadow-lg shadow-teal-200">
+          <div className="inline-flex items-center justify-center bg-[#0F172A] text-white w-16 h-16 rounded-2xl mb-4 shadow-lg shadow-slate-900/10">
             <MdHandshake size={32} />
           </div>
           <h1 className="text-2xl font-bold text-slate-800">Create Account</h1>
@@ -62,12 +62,12 @@ const RegisterPage = () => {
             <div>
               <label className="label">I am a</label>
               <div className="grid grid-cols-2 gap-3 mt-1">
-                <label className={`border rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition-all ${watch('role') === 'user' ? 'border-teal-500 bg-teal-50 ring-1 ring-teal-500' : 'border-slate-200 hover:border-teal-200 bg-white'}`}>
+                <label className={`border rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition-all ${watch('role') === 'user' ? 'border-[#0F172A] bg-slate-50 ring-2 ring-[#0F172A]' : 'border-slate-200 hover:border-slate-300 bg-white'}`}>
                   <input type="radio" value="user" className="hidden" {...register('role')} />
                   <span className="font-semibold text-slate-800">User</span>
                   <span className="text-xs text-slate-500 text-center">Looking for service</span>
                 </label>
-                <label className={`border rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition-all ${watch('role') === 'employee' ? 'border-teal-500 bg-teal-50 ring-1 ring-teal-500' : 'border-slate-200 hover:border-teal-200 bg-white'}`}>
+                <label className={`border rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition-all ${watch('role') === 'employee' ? 'border-[#0F172A] bg-slate-50 ring-2 ring-[#0F172A]' : 'border-slate-200 hover:border-slate-300 bg-white'}`}>
                   <input type="radio" value="employee" className="hidden" {...register('role')} />
                   <span className="font-semibold text-slate-800">Employee</span>
                   <span className="text-xs text-slate-500 text-center">Daily wage worker</span>
@@ -204,7 +204,7 @@ const RegisterPage = () => {
 
           <p className="text-center text-sm text-slate-500 mt-5">
             Already have an account?{' '}
-            <Link to="/login" className="text-teal-600 font-semibold hover:underline">
+            <Link to="/login" className="text-[#D97706] font-semibold hover:underline">
               Sign In
             </Link>
           </p>

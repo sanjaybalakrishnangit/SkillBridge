@@ -38,7 +38,7 @@ const LoginPage = () => {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center bg-teal-600 text-white w-16 h-16 rounded-2xl mb-4 shadow-lg shadow-teal-200">
+          <div className="inline-flex items-center justify-center bg-[#0F172A] text-white w-16 h-16 rounded-2xl mb-4 shadow-lg shadow-slate-900/10">
             <MdHandshake size={32} />
           </div>
           <h1 className="text-2xl font-bold text-slate-800">Welcome Back</h1>
@@ -120,7 +120,7 @@ const LoginPage = () => {
 
           <p className="text-center text-sm text-slate-500 mt-5">
             Don&apos;t have an account?{' '}
-            <Link to="/register" className="text-teal-600 font-semibold hover:underline">
+            <Link to="/register" className="text-[#D97706] font-semibold hover:underline">
               Register
             </Link>
           </p>

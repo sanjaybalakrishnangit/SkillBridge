@@ -9,10 +9,24 @@ import toast from 'react-hot-toast'
 const Navbar = () => {
   const { user, logoutUser } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const navigate = useNavigate()
 
   const [notifications, setNotifications] = useState([])
   const [showNotifications, setShowNotifications] = useState(false)
+
+  // Scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Fetch notifications
   useEffect(() => {
@@ -43,17 +57,21 @@ const Navbar = () => {
 
   const navLinkClass = ({ isActive }) =>
     `relative text-sm font-semibold transition-colors duration-300 group py-2 ${
-      isActive ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'
+      isActive ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900'
     }`
 
-  const underlineSpan = <span className="absolute left-0 bottom-0 w-full h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+  const underlineSpan = <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#D97706] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-slate-200/50 shadow-sm transition-all duration-300">
+    <nav className={`sticky top-0 z-50 transition-all duration-300 border-b ${
+      scrolled 
+        ? 'bg-white/95 backdrop-blur-md border-slate-200/80 shadow-md py-1' 
+        : 'bg-white/70 backdrop-blur-sm border-slate-200/40 py-2'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="bg-gradient-to-br from-blue-700 to-blue-500 text-white p-2 rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300 flex flex-col justify-center items-center relative">
+            <div className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] text-white p-2 rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300 flex flex-col justify-center items-center relative">
               {/* Bridge icon concept */}
               <div className="w-5 h-1 bg-white rounded-full mb-1"></div>
               <div className="w-5 flex justify-between">
@@ -62,12 +80,12 @@ const Navbar = () => {
               </div>
             </div>
             <div className="hidden sm:flex items-baseline gap-1">
-              <span className="font-bold text-xl">
-                <span className="text-blue-700">Skill</span>
-                <span className="text-orange-500">Bridge</span>
+              <span className="font-bold text-xl tracking-tight">
+                <span className="text-[#0F172A]">Skill</span>
+                <span className="text-[#D97706]">Bridge</span>
               </span>
             </div>
-            <span className="sm:hidden font-bold text-blue-700 text-base">SB</span>
+            <span className="sm:hidden font-bold text-[#0F172A] text-base">SB</span>
           </Link>
 
           {/* Desktop nav links */}
@@ -107,9 +125,9 @@ const Navbar = () => {
                     onClick={() => setShowNotifications(!showNotifications)}
                     className="relative p-2 rounded-full text-slate-500 hover:bg-slate-100 transition-colors focus:outline-none"
                   >
-                    <FiBell size={20} className={unreadCount > 0 ? 'animate-bounce text-blue-600' : ''} />
+                    <FiBell size={20} className={unreadCount > 0 ? 'text-[#D97706]' : ''} />
                     {unreadCount > 0 && (
-                      <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                      <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-[#D97706] rounded-full border-2 border-white"></span>
                     )}
                   </button>
 
@@ -118,15 +136,15 @@ const Navbar = () => {
                     <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-200 rounded-xl shadow-xl py-2 z-50">
                       <div className="px-4 py-2 border-b border-slate-100 flex justify-between items-center">
                         <h3 className="font-semibold text-slate-800">Notifications</h3>
-                        <span className="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{unreadCount} unread</span>
+                        <span className="text-xs text-[#D97706] bg-[#D97706]/10 px-2 py-0.5 rounded-full">{unreadCount} unread</span>
                       </div>
                       <div className="max-h-80 overflow-y-auto">
                         {notifications.length === 0 ? (
                           <div className="px-4 py-6 text-center text-slate-500 text-sm">No notifications</div>
                         ) : (
                           notifications.map(n => (
-                            <div key={n._id} className={`px-4 py-3 border-b border-slate-50 flex items-start gap-3 hover:bg-slate-50 transition-colors ${!n.isRead ? 'bg-blue-50/30' : ''}`}>
-                              <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!n.isRead ? 'bg-blue-500' : 'bg-transparent'}`} />
+                            <div key={n._id} className={`px-4 py-3 border-b border-slate-50 flex items-start gap-3 hover:bg-slate-50 transition-colors ${!n.isRead ? 'bg-amber-50/30' : ''}`}>
+                              <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!n.isRead ? 'bg-[#D97706]' : 'bg-transparent'}`} />
                               <div className="flex-1">
                                 <p className={`text-sm ${!n.isRead ? 'text-slate-800 font-medium' : 'text-slate-600'}`}>{n.message}</p>
                                 <p className="text-xs text-slate-400 mt-1">{new Date(n.createdAt).toLocaleDateString()}</p>
@@ -134,7 +152,7 @@ const Navbar = () => {
                               {!n.isRead && (
                                 <button 
                                   onClick={() => handleMarkAsRead(n._id)}
-                                  className="text-xs text-blue-600 hover:text-blue-800 font-medium flex-shrink-0"
+                                  className="text-xs text-[#D97706] hover:text-[#b45309] font-medium flex-shrink-0"
                                 >
                                   Mark read
                                 </button>
@@ -150,12 +168,12 @@ const Navbar = () => {
                 <div className="h-6 w-px bg-slate-200"></div>
 
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">
+                  <div className="w-7 h-7 rounded-full bg-[#0F172A] text-white flex items-center justify-center text-xs font-bold">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
                   <span className="text-sm font-medium text-slate-700">{user.name}</span>
                   {user.role === 'admin' && (
-                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold">
+                    <span className="text-xs bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-semibold">
                       Admin
                     </span>
                   )}
@@ -172,7 +190,7 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors"
+                  className="text-sm font-medium text-slate-600 hover:text-[#D97706] transition-colors"
                 >
                   Sign In
                 </Link>
@@ -202,7 +220,7 @@ const Navbar = () => {
               to="/"
               className={({ isActive }) =>
                 `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+                  isActive ? 'bg-slate-900 text-white border-l-4 border-[#D97706]' : 'text-slate-700 hover:bg-slate-50'
                 }`
               }
               end
@@ -215,7 +233,7 @@ const Navbar = () => {
                 to="/jobs"
                 className={({ isActive }) =>
                   `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+                    isActive ? 'bg-slate-900 text-white border-l-4 border-[#D97706]' : 'text-slate-700 hover:bg-slate-50'
                   }`
                 }
                 onClick={() => setMenuOpen(false)}
@@ -228,7 +246,7 @@ const Navbar = () => {
                 to="/post-job"
                 className={({ isActive }) =>
                   `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+                    isActive ? 'bg-slate-900 text-white border-l-4 border-[#D97706]' : 'text-slate-700 hover:bg-slate-50'
                   }`
                 }
                 onClick={() => setMenuOpen(false)}
@@ -242,7 +260,7 @@ const Navbar = () => {
                 to="/my-profile"
                 className={({ isActive }) =>
                   `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+                    isActive ? 'bg-slate-900 text-white border-l-4 border-[#D97706]' : 'text-slate-700 hover:bg-slate-50'
                   }`
                 }
                 onClick={() => setMenuOpen(false)}
@@ -255,7 +273,7 @@ const Navbar = () => {
                 to="/admin"
                 className={({ isActive }) =>
                   `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-50'
+                    isActive ? 'bg-slate-900 text-white border-l-4 border-[#D97706]' : 'text-slate-700 hover:bg-slate-50'
                   }`
                 }
                 onClick={() => setMenuOpen(false)}
