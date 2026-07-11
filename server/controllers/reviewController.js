@@ -8,9 +8,9 @@ const addReview = async (req, res, next) => {
   try {
     const { workerId, rating, comment } = req.body;
 
-    // Check user role: only standard users can leave reviews
-    if (req.user.role !== 'user') {
-      return res.status(403).json({ message: 'Only standard users can leave reviews' });
+    // Only standard users and admins can leave reviews (not employees/workers reviewing themselves)
+    if (req.user.role === 'employee') {
+      return res.status(403).json({ message: 'Workers cannot leave reviews for other workers' });
     }
 
     if (!workerId || !rating || !comment) {

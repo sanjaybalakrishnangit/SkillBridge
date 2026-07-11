@@ -12,18 +12,18 @@ const SKILLS = [
 ]
 
 const SKILL_COLORS = {
-  plumber: 'bg-blue-100 text-blue-700',
-  electrician: 'bg-yellow-100 text-yellow-700',
-  painter: 'bg-purple-100 text-purple-700',
-  carpenter: 'bg-orange-100 text-orange-700',
-  driver: 'bg-green-100 text-green-700',
-  gardener: 'bg-emerald-100 text-emerald-700',
-  mason: 'bg-stone-100 text-stone-700',
-  welder: 'bg-red-100 text-red-700',
-  cook: 'bg-pink-100 text-pink-700',
+  plumber: 'bg-slate-100 text-slate-800 border border-slate-200',
+  electrician: 'bg-amber-100 text-amber-800 border border-amber-200',
+  painter: 'bg-slate-100 text-slate-800 border border-slate-200',
+  carpenter: 'bg-amber-100 text-amber-800 border border-amber-200',
+  driver: 'bg-slate-100 text-slate-800 border border-slate-200',
+  gardener: 'bg-slate-100 text-slate-800 border border-slate-200',
+  mason: 'bg-slate-100 text-slate-800 border border-slate-200',
+  welder: 'bg-slate-100 text-slate-800 border border-slate-200',
+  cook: 'bg-slate-100 text-slate-800 border border-slate-200',
 }
 
-const getSkillColor = (skill) => SKILL_COLORS[skill?.toLowerCase()] || 'bg-teal-100 text-teal-700'
+const getSkillColor = (skill) => SKILL_COLORS[skill?.toLowerCase()] || 'bg-slate-100 text-slate-800 border border-slate-200'
 
 const MyProfilePage = () => {
   const [worker, setWorker] = useState(null)
@@ -73,17 +73,17 @@ const MyProfilePage = () => {
       )}
 
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
-        <div className="bg-gradient-to-r from-teal-50 to-emerald-50 p-6 sm:p-10 border-b border-teal-100">
+        <div className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] p-6 sm:p-10 border-b border-slate-800 text-white">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div className="relative">
               {worker.photo ? (
                 <img
                   src={worker.photo}
                   alt={worker.name}
-                  className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
+                  className="w-32 h-32 rounded-full object-cover border-4 border-slate-700 shadow-lg"
                 />
               ) : (
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-teal-400 to-teal-700 flex items-center justify-center text-white font-bold text-5xl shadow-lg border-4 border-white">
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#D97706] to-[#F59E0B] flex items-center justify-center text-white font-bold text-5xl shadow-lg border-4 border-slate-700">
                   {worker.name?.charAt(0).toUpperCase()}
                 </div>
               )}
@@ -91,9 +91,9 @@ const MyProfilePage = () => {
 
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-slate-800">{worker.name}</h1>
+                <h1 className="text-3xl font-bold text-white tracking-tight">{worker.name}</h1>
                 {worker.isVerified && (
-                  <div className="flex items-center gap-1 text-teal-600 bg-teal-50 px-2 py-1 rounded-full text-sm font-semibold mx-auto sm:mx-0">
+                  <div className="flex items-center gap-1 text-[#22C55E] bg-[#22C55E]/10 border border-[#22C55E]/20 px-2.5 py-1 rounded-full text-sm font-semibold mx-auto sm:mx-0">
                     <MdVerified size={18} />
                     <span>Verified</span>
                   </div>
@@ -103,21 +103,21 @@ const MyProfilePage = () => {
                 {worker.skill}
               </span>
               
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-slate-600">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-slate-300">
                 <div className="flex items-center gap-1.5">
-                  <FiMapPin className="text-teal-500" />
+                  <FiMapPin className="text-[#D97706]" />
                   <span>{worker.location}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <FiPhone className="text-teal-500" />
+                  <FiPhone className="text-[#D97706]" />
                   <span>{worker.phone}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <FiStar className="text-amber-400" />
+                  <FiStar className="text-[#F59E0B]" />
                   <span className="font-semibold">{worker.rating > 0 ? worker.rating.toFixed(1) : 'New'}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <FiClock className={worker.isAvailable ? 'text-emerald-500' : 'text-rose-500'} />
+                  <FiClock className={worker.isAvailable ? 'text-[#22C55E]' : 'text-rose-400'} />
                   <span className="font-semibold text-sm">
                     {worker.isAvailable ? 'Available Now' : 'Busy'}
                   </span>
@@ -128,7 +128,7 @@ const MyProfilePage = () => {
             <div className="absolute top-6 right-6 sm:static sm:mt-0">
               <button
                 onClick={() => setIsEditing(true)}
-                className="btn-secondary text-sm gap-2"
+                className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-200 flex items-center gap-2 text-sm"
               >
                 <FiEdit2 size={14} />
                 <span className="hidden sm:inline">Edit Profile</span>
@@ -139,7 +139,7 @@ const MyProfilePage = () => {
 
         <div className="p-6 sm:p-10">
           <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-            <FiBriefcase className="text-teal-600" />
+            <FiBriefcase className="text-[#D97706]" />
             Experience & Details
           </h2>
           
@@ -170,6 +170,7 @@ const MyProfilePage = () => {
 }
 
 const EditProfileModal = ({ worker, onClose, onSuccess }) => {
+  const [previewUrl, setPreviewUrl] = useState(worker.photo || null)
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       name: worker.name,
@@ -181,6 +182,11 @@ const EditProfileModal = ({ worker, onClose, onSuccess }) => {
     }
   })
   const [loading, setLoading] = useState(false)
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) setPreviewUrl(URL.createObjectURL(file))
+  }
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -255,8 +261,32 @@ const EditProfileModal = ({ worker, onClose, onSuccess }) => {
           </div>
 
           <div>
-            <label className="label">Update Photo</label>
-            <input type="file" accept="image/*" className="input-field text-sm" {...register('photo')} />
+            <label className="label">Profile Photo</label>
+            <div className="flex items-center gap-4">
+              {previewUrl ? (
+                <img src={previewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover border-2 border-slate-200" />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 border border-dashed border-slate-300">
+                  <FiAlertCircle size={24} />
+                </div>
+              )}
+              <div className="flex-1">
+                <input
+                  type="file"
+                  id="photo-upload-edit"
+                  accept="image/*"
+                  className="hidden"
+                  {...register('photo', { onChange: handleImageChange })}
+                />
+                <label
+                  htmlFor="photo-upload-edit"
+                  className="cursor-pointer inline-block px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-colors border border-slate-200"
+                >
+                  Choose File
+                </label>
+                <p className="text-xs text-slate-400 mt-2">JPG, PNG, WEBP up to 5MB</p>
+              </div>
+            </div>
           </div>
 
           <div className="flex gap-3 pt-2">

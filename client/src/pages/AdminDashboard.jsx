@@ -7,6 +7,7 @@ import {
   deleteWorker,
   toggleVerification,
 } from '../api/workers'
+import { getAllReviews, deleteReview as deleteReviewApi } from '../api/reviews'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
 import {
@@ -19,6 +20,8 @@ import {
   FiCheck,
   FiUsers,
   FiCheckCircle,
+  FiStar,
+  FiMessageSquare,
 } from 'react-icons/fi'
 import { MdVerified } from 'react-icons/md'
 
@@ -200,7 +203,7 @@ const WorkerModal = ({ worker, onClose, onSuccess }) => {
               type="file"
               accept="image/*"
               className="input-field text-sm file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0
-                file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
+                file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
               {...register('photo')}
             />
           </div>
@@ -232,11 +235,13 @@ const WorkerModal = ({ worker, onClose, onSuccess }) => {
 // ── Admin Dashboard ────────────────────────────────────────────────────────────
 const AdminDashboard = () => {
   const [workers, setWorkers] = useState([])
+  const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadingReviews, setLoadingReviews] = useState(false)
   const [modal, setModal] = useState(null) // null | { type: 'add' | 'edit', worker?: {} }
   const [search, setSearch] = useState('')
   const [verifyingId, setVerifyingId] = useState(null)
-  const [activeTab, setActiveTab] = useState('all')
+  const [activeTab, setActiveTab] = useState('all') // 'all' | 'pending' | 'reviews'
 
   const fetchWorkers = useCallback(async () => {
     setLoading(true)
@@ -250,9 +255,27 @@ const AdminDashboard = () => {
     }
   }, [])
 
+  const fetchReviews = useCallback(async () => {
+    setLoadingReviews(true)
+    try {
+      const res = await getAllReviews()
+      setReviews(res.data)
+    } catch {
+      toast.error('Failed to load reviews')
+    } finally {
+      setLoadingReviews(false)
+    }
+  }, [])
+
   useEffect(() => {
     fetchWorkers()
   }, [fetchWorkers])
+
+  useEffect(() => {
+    if (activeTab === 'reviews') {
+      fetchReviews()
+    }
+  }, [activeTab, fetchReviews])
 
   const handleDelete = async (worker) => {
     if (!window.confirm(`Delete "${worker.name}"? This cannot be undone.`)) return
@@ -280,6 +303,18 @@ const AdminDashboard = () => {
     }
   }
 
+  const handleDeleteReview = async (review) => {
+    if (!window.confirm(`Delete review by "${review.userId?.name || 'Anonymous'}"?`)) return
+    try {
+      await deleteReviewApi(review._id)
+      toast.success('Review deleted successfully')
+      setReviews(prev => prev.filter(r => r._id !== review._id))
+      fetchWorkers() // Refresh rating in workers list
+    } catch {
+      toast.error('Failed to delete review')
+    }
+  }
+
   const filtered = workers.filter((w) => {
     if (activeTab === 'pending' && w.isVerified) return false;
     return (
@@ -290,10 +325,10 @@ const AdminDashboard = () => {
   })
 
   const stats = [
-    { label: 'Total Workers', value: workers.length, icon: FiUsers, color: 'bg-teal-50 text-teal-700 border-teal-200' },
-    { label: 'Verified', value: workers.filter((w) => w.isVerified).length, icon: FiCheckCircle, color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-    { label: 'Available', value: workers.filter((w) => w.isAvailable).length, icon: FiCheck, color: 'bg-blue-50 text-blue-700 border-blue-200' },
-    { label: 'Unverified', value: workers.filter((w) => !w.isVerified).length, icon: FiShield, color: 'bg-amber-50 text-amber-700 border-amber-200' },
+    { label: 'Total Workers', value: workers.length, icon: FiUsers, color: 'bg-slate-50 text-slate-800 border-slate-200' },
+    { label: 'Verified', value: workers.filter((w) => w.isVerified).length, icon: FiCheckCircle, color: 'bg-emerald-50 text-[#22C55E] border-emerald-100' },
+    { label: 'Available', value: workers.filter((w) => w.isAvailable).length, icon: FiCheck, color: 'bg-slate-50 text-slate-700 border-slate-200' },
+    { label: 'Unverified', value: workers.filter((w) => !w.isVerified).length, icon: FiShield, color: 'bg-amber-50 text-[#F59E0B] border-amber-100' },
   ]
 
   return (
@@ -302,10 +337,10 @@ const AdminDashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <FiShield className="text-teal-600" size={22} />
+            <FiShield className="text-[#0F172A]" size={22} />
             <h1 className="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
           </div>
-          <p className="text-slate-500 text-sm">Manage worker profiles and verification status</p>
+          <p className="text-slate-500 text-sm">Manage worker profiles, verification, and user reviews</p>
         </div>
         <button
           id="add-worker-btn"
@@ -330,7 +365,7 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {/* Search */}
+      {/* Search & Tabs */}
       <div className="flex flex-col sm:flex-row gap-4 mb-5">
         <div className="flex bg-slate-100 p-1 rounded-xl w-full sm:w-auto">
           <button
@@ -343,30 +378,113 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab('pending')}
             className={`flex-1 sm:flex-none px-6 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${activeTab === 'pending' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
-            Pending Approvals
+            Pending
             {workers.filter(w => !w.isVerified).length > 0 && (
               <span className="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full">
                 {workers.filter(w => !w.isVerified).length}
               </span>
             )}
           </button>
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={`flex-1 sm:flex-none px-6 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${activeTab === 'reviews' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          >
+            Reviews
+          </button>
         </div>
 
-        <div className="relative flex-1">
-          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-          <input
-            id="worker-search"
-            type="text"
-            placeholder="Search by name, skill, or location..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="input-field pl-10 h-full"
-          />
-        </div>
+        {activeTab !== 'reviews' && (
+          <div className="relative flex-1">
+            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+            <input
+              id="worker-search"
+              type="text"
+              placeholder="Search by name, skill, or location..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="input-field pl-10 h-full"
+            />
+          </div>
+        )}
       </div>
 
-      {/* Table */}
-      {loading ? (
+      {/* Main Content Area */}
+      {activeTab === 'reviews' ? (
+        loadingReviews ? (
+          <LoadingSpinner />
+        ) : (
+          <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-100 text-left">
+                    <th className="px-5 py-3.5 font-semibold text-slate-500 text-xs uppercase tracking-wide">
+                      Worker Name
+                    </th>
+                    <th className="px-5 py-3.5 font-semibold text-slate-500 text-xs uppercase tracking-wide">
+                      User
+                    </th>
+                    <th className="px-5 py-3.5 font-semibold text-slate-500 text-xs uppercase tracking-wide">
+                      Rating
+                    </th>
+                    <th className="px-5 py-3.5 font-semibold text-slate-500 text-xs uppercase tracking-wide">
+                      Comment
+                    </th>
+                    <th className="px-5 py-3.5 font-semibold text-slate-500 text-xs uppercase tracking-wide">
+                      Date
+                    </th>
+                    <th className="px-5 py-3.5 font-semibold text-slate-500 text-xs uppercase tracking-wide text-right">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {reviews.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} className="text-center py-14 text-slate-400">
+                        <FiMessageSquare className="mx-auto mb-3 opacity-35" size={24} />
+                        <p className="font-medium">No reviews found</p>
+                      </td>
+                    </tr>
+                  ) : (
+                    reviews.map((review) => (
+                      <tr key={review._id} className="hover:bg-slate-50/70 transition-colors">
+                        <td className="px-5 py-3.5 font-semibold text-slate-800">
+                          {review.workerId?.name || 'Deleted Worker'}
+                        </td>
+                        <td className="px-5 py-3.5 text-slate-700">
+                          {review.userId?.name || 'Anonymous User'}
+                        </td>
+                        <td className="px-5 py-3.5 text-amber-600 font-bold">
+                          <span className="flex items-center gap-1">
+                            <FiStar className="fill-amber-500 text-amber-500" size={13} />
+                            {review.rating}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3.5 text-slate-600 max-w-xs truncate" title={review.comment}>
+                          {review.comment}
+                        </td>
+                        <td className="px-5 py-3.5 text-slate-400 text-xs">
+                          {new Date(review.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-5 py-3.5 text-right">
+                          <button
+                            onClick={() => handleDeleteReview(review)}
+                            className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors"
+                            title="Delete review"
+                          >
+                            <FiTrash2 size={14} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )
+      ) : loading ? (
         <LoadingSpinner />
       ) : (
         <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
@@ -405,7 +523,7 @@ const AdminDashboard = () => {
                         <p className="text-xs mt-1">
                           Try clearing your search or{' '}
                           <button
-                            className="text-teal-600 hover:underline"
+                            className="text-[#D97706] hover:underline"
                             onClick={() => setSearch('')}
                           >
                             reset
@@ -427,7 +545,7 @@ const AdminDashboard = () => {
                               className="w-9 h-9 rounded-full object-cover border border-slate-100"
                             />
                           ) : (
-                            <div className="w-9 h-9 rounded-full bg-teal-500 text-white flex items-center justify-center font-bold text-sm">
+                            <div className="w-9 h-9 rounded-full bg-[#0F172A] text-white flex items-center justify-center font-bold text-sm">
                               {worker.name.charAt(0).toUpperCase()}
                             </div>
                           )}
@@ -440,7 +558,7 @@ const AdminDashboard = () => {
 
                       {/* Skill */}
                       <td className="px-5 py-3.5">
-                        <span className="bg-teal-100 text-teal-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+                        <span className="bg-slate-100 text-slate-800 border border-slate-200 text-xs font-semibold px-2.5 py-1 rounded-full">
                           {worker.skill}
                         </span>
                       </td>
@@ -471,7 +589,7 @@ const AdminDashboard = () => {
                           className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all disabled:opacity-50 ${
                             worker.isVerified
                               ? 'bg-emerald-100 text-emerald-700 hover:bg-red-100 hover:text-red-600'
-                              : 'bg-slate-100 text-slate-500 hover:bg-teal-100 hover:text-teal-700'
+                              : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-[#0F172A]'
                           }`}
                           title={worker.isVerified ? 'Click to unverify' : 'Click to verify'}
                         >
@@ -491,7 +609,7 @@ const AdminDashboard = () => {
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => setModal({ type: 'edit', worker })}
-                            className="p-2 rounded-lg hover:bg-teal-50 text-slate-400 hover:text-teal-600 transition-colors"
+                            className="p-2 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-[#D97706] transition-colors"
                             title="Edit worker"
                           >
                             <FiEdit2 size={14} />

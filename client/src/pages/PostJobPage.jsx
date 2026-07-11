@@ -69,12 +69,12 @@ const PostJobPage = () => {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-5 px-4">
         <div className="bg-emerald-100 p-6 rounded-full shadow-lg">
-          <FiCheckCircle className="text-emerald-600" size={52} />
+          <FiCheckCircle className="text-[#22C55E]" size={52} />
         </div>
         <h2 className="text-2xl font-bold text-slate-800">Job Posted!</h2>
         <p className="text-slate-500 text-sm">Redirecting you to the jobs board...</p>
         <div className="w-48 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-          <div className="h-full bg-teal-500 rounded-full animate-[progress_2.5s_linear_forwards]" />
+          <div className="h-full bg-[#D97706] rounded-full animate-[progress_2.5s_linear_forwards]" />
         </div>
       </div>
     )
@@ -85,7 +85,7 @@ const PostJobPage = () => {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-1">
-          <FiBriefcase className="text-teal-600" size={22} />
+          <FiBriefcase className="text-[#0F172A]" size={22} />
           <h1 className="text-2xl font-bold text-slate-800">Post a Job</h1>
         </div>
         <p className="text-slate-500 text-sm">
@@ -208,8 +208,8 @@ const PostJobPage = () => {
                   />
                   <div
                     className="input-modern text-sm file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 border-2 border-slate-200
-                      peer-checked:border-teal-500 peer-checked:bg-teal-50 peer-checked:text-teal-700
-                      hover:border-teal-300 transition-all duration-200 text-slate-500"
+                      peer-checked:border-[#0F172A] peer-checked:bg-slate-50 peer-checked:text-[#0F172A]
+                      hover:border-slate-300 transition-all duration-200 text-slate-500"
                   >
                     <span className="font-semibold text-sm">{label}</span>
                     <span className="text-xs mt-0.5 opacity-70">{desc}</span>
@@ -249,7 +249,7 @@ const PostJobPage = () => {
             <label
               htmlFor="job-image"
               className="flex flex-col items-center gap-3 p-6 border-2 border-dashed border-slate-200
-                rounded-xl cursor-pointer hover:border-teal-400 hover:bg-teal-50 transition-all duration-200"
+                rounded-xl cursor-pointer hover:border-[#D97706] hover:bg-slate-50 transition-all duration-200"
             >
               <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
                 <FiUpload className="text-slate-500" size={20} />

@@ -14,14 +14,17 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Handle 401 — clear auth and redirect to login
+// Handle 401 — clear auth and redirect to login only if user was authenticated
 api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
+      const hadToken = !!localStorage.getItem('lwc_token')
       localStorage.removeItem('lwc_token')
       localStorage.removeItem('lwc_user')
-      window.location.href = '/login'
+      if (hadToken) {
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(err)
   }

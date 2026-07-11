@@ -25,7 +25,12 @@ const LoginPage = () => {
       const { token, ...userData } = res.data
       loginUser(userData, token)
       toast.success(`Welcome back, ${userData.name}!`)
-      navigate(userData.role === 'admin' ? '/admin' : '/', { replace: true })
+      navigate(
+        userData.role === 'admin' ? '/admin' :
+        userData.role === 'employee' ? '/my-profile' :
+        '/',
+        { replace: true }
+      )
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed. Please try again.')
     } finally {

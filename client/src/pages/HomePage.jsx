@@ -278,7 +278,7 @@ const HomePage = () => {
       </section>
 
       {/* ── Footer CTA (Hide for employees) ── */}
-      {(!user || user.role === 'user') && (
+      {user?.role !== 'employee' && (
         <section className="py-20 relative z-10 bg-slate-100 mt-12">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-br from-[#0F172A] to-[#1E293B] rounded-3xl p-10 sm:p-16 text-center text-white shadow-2xl relative overflow-hidden group">

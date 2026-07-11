@@ -3,7 +3,7 @@ import { FiMapPin, FiPhone, FiClock } from 'react-icons/fi'
 const PAYMENT_CONFIG = {
   money: { label: '💵 Paid', color: 'bg-green-100 text-green-700 border border-green-200' },
   food:  { label: '🍱 Food Provided', color: 'bg-amber-100 text-amber-700 border border-amber-200' },
-  both:  { label: '💵🍱 Paid + Food', color: 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-bold shadow-md' },
+  both:  { label: '💵🍱 Paid + Food', color: 'bg-gradient-to-r from-[#D97706] to-[#F59E0B] text-white font-bold shadow-md' },
 }
 
 const timeAgo = (dateStr) => {
@@ -53,7 +53,7 @@ const JobCard = ({ job }) => {
       {/* Badges */}
       <div className="flex flex-wrap gap-2 mb-4">
         {skill && (
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-200">
             {skill}
           </span>
         )}
@@ -68,7 +68,7 @@ const JobCard = ({ job }) => {
 
       {/* Location */}
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-5">
-        <FiMapPin size={13} className="text-teal-500 flex-shrink-0" />
+        <FiMapPin size={13} className="text-[#D97706] flex-shrink-0" />
         <span className="truncate">{location}</span>
       </div>
 

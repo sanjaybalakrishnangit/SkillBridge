@@ -92,11 +92,9 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-7">
             <NavLink to="/" className={navLinkClass} end>Home {underlineSpan}</NavLink>
             
-            {(!user || user.role === 'employee') && (
-              <NavLink to="/jobs" className={navLinkClass}>Jobs {underlineSpan}</NavLink>
-            )}
+            <NavLink to="/jobs" className={navLinkClass}>Jobs {underlineSpan}</NavLink>
             
-            {(!user || user.role === 'user') && (
+            {user?.role !== 'employee' && (
               <NavLink to="/post-job" className={navLinkClass}>Post a Job {underlineSpan}</NavLink>
             )}
 
@@ -228,8 +226,7 @@ const Navbar = () => {
             >
               Home
             </NavLink>
-            {(!user || user.role === 'employee') && (
-              <NavLink
+            <NavLink
                 to="/jobs"
                 className={({ isActive }) =>
                   `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
@@ -240,8 +237,7 @@ const Navbar = () => {
               >
                 Jobs
               </NavLink>
-            )}
-            {(!user || user.role === 'user') && (
+            {user?.role !== 'employee' && (
               <NavLink
                 to="/post-job"
                 className={({ isActive }) =>

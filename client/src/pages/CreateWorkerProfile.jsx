@@ -126,7 +126,7 @@ const CreateWorkerProfile = () => {
             <label className="label">Profile Photo (Optional)</label>
             <div className="flex items-center gap-4">
               {previewUrl ? (
-                <img src={previewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover border-2 border-teal-100" />
+                <img src={previewUrl} alt="Preview" className="w-16 h-16 rounded-full object-cover border-2 border-slate-200" />
               ) : (
                 <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 border border-dashed border-slate-300">
                   <FiImage size={24} />

@@ -118,7 +118,7 @@ const WorkerDetailsPage = () => {
   if (!worker) return null
 
   const isOwnProfile = user && worker && (worker.createdBy === user._id || worker.createdBy?._id === user._id)
-  const canLeaveReview = user && user.role === 'user' && !isOwnProfile
+  const canLeaveReview = user && (user.role === 'user' || user.role === 'admin') && !isOwnProfile
   const hasReviewed = reviews.some(r => r.userId?._id === user?._id || r.userId === user?._id)
 
   return (
@@ -276,9 +276,11 @@ const WorkerDetailsPage = () => {
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/60 text-slate-500 text-sm italic">
                 {!user 
                   ? 'Please log in to submit a rating.'
-                  : isOwnProfile 
-                    ? 'You cannot review your own profile.' 
-                    : 'Only registered customers can leave reviews.'}
+                  : user.role === 'employee'
+                    ? 'Workers cannot review other workers.'
+                    : isOwnProfile 
+                      ? 'You cannot review your own profile.'
+                      : 'Only registered users can leave reviews.'}
               </div>
             )}
           </div>

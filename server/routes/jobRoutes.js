@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 
 const { getJobs, getJobById, createJob, updateJob, deleteJob } = require('../controllers/jobController');
-const { protect } = require('../middleware/authMiddleware');
+const { protect, optionalProtect } = require('../middleware/authMiddleware');
 
 // Multer config for job image uploads
 const storage = multer.diskStorage({
@@ -28,7 +28,7 @@ const upload = multer({
 
 router.get('/', getJobs);
 router.get('/:id', getJobById);
-router.post('/', protect, upload.single('image'), createJob);
+router.post('/', optionalProtect, upload.single('image'), createJob);  // Public — no login required
 router.put('/:id', protect, upload.single('image'), updateJob);
 router.delete('/:id', protect, deleteJob);
 
