@@ -1,161 +1,462 @@
-# 🤝 Local Worker Connector
+# 🤝 Skill Bridge – Local Worker Connector
 
-A full-stack MERN application connecting daily wage workers (plumbers, electricians, painters, etc.) with clients. Workers can be registered by family members or admins. Clients can browse workers or post job requirements.
+![Status](https://img.shields.io/badge/Status-Active-success)
+![Stack](https://img.shields.io/badge/Stack-MERN-blue)
+![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB)
+![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933)
+![Database](https://img.shields.io/badge/Database-MongoDB-47A248)
+![License](https://img.shields.io/badge/License-Academic-orange)
+
+A full-stack **MERN** web application that connects **daily wage workers** (plumbers, electricians, carpenters, painters, drivers, gardeners, etc.) with clients looking for reliable local services.
+
+The platform allows administrators to verify workers, enables clients to browse skilled workers, and provides job posting functionality for employers.
+
+This project is being developed as a **Final Year B.Tech Information Technology Project** and serves as the foundation for an IEEE research-based enhancement with intelligent worker recommendation and smart service matching.
 
 ---
 
-## 📦 Tech Stack
+# 📖 Table of Contents
+
+- Project Overview
+- Features
+- Technology Stack
+- System Architecture
+- Project Structure
+- Installation
+- Environment Variables
+- Running the Project
+- Demo Credentials
+- API Overview
+- Security
+- Future Enhancements
+- Documentation
+- Development Team
+- License
+
+---
+
+# 🎯 Project Overview
+
+Skill Bridge aims to bridge the gap between skilled workers and customers by providing a modern digital platform where users can:
+
+- Find verified local workers
+- Filter workers by skill and location
+- Contact workers directly
+- Post job requirements
+- Allow administrators to verify worker profiles
+- Maintain secure authentication using JWT
+
+The project follows a clean MERN architecture with separate frontend and backend applications.
+
+---
+
+# ✨ Features
+
+## Authentication
+
+- JWT Authentication
+- Password Hashing using bcrypt
+- Secure Login
+- User Registration
+- Protected Routes
+
+---
+
+## Worker Management
+
+- Add Workers
+- Update Worker Details
+- Delete Workers
+- Verify Workers
+- Upload Worker Photos
+- Worker Availability Status
+- Worker Ratings
+
+---
+
+## Job Management
+
+- Post Job Requirement
+- Browse Jobs
+- Contact Employer
+- Image Upload Support
+
+---
+
+## Search & Filtering
+
+- Search by Location
+- Filter by Skill
+- Responsive Worker Cards
+
+---
+
+## Admin Dashboard
+
+- Worker Statistics
+- Search Workers
+- Verify Workers
+- Edit Workers
+- Delete Workers
+- Add New Workers
+
+---
+
+## User Experience
+
+- Responsive Design
+- Premium Industrial UI
+- Toast Notifications
+- Loading Indicators
+- Image Preview
+- Mobile Friendly
+
+---
+
+# 🛠 Technology Stack
 
 | Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + Vite + Tailwind CSS v3 |
-| Backend | Node.js + Express |
-| Database | MongoDB + Mongoose |
-| Auth | JWT + bcrypt |
-| File Upload | Multer (local storage) |
-| UI Libraries | React Router v6, React Hook Form, React Hot Toast, React Icons |
+|--------|------------|
+| Frontend | React 18 |
+| Build Tool | Vite |
+| Styling | Tailwind CSS v3 |
+| Backend | Node.js |
+| Framework | Express.js |
+| Database | MongoDB |
+| ODM | Mongoose |
+| Authentication | JWT |
+| Password Hashing | bcryptjs |
+| Forms | React Hook Form |
+| HTTP Client | Axios |
+| Notifications | React Hot Toast |
+| Icons | React Icons |
+| File Upload | Multer |
 
 ---
 
-## 🗂️ Project Structure
+# 🏗 System Architecture
 
 ```
-Local Worker Connector/
-├── server/                  # Express API
-│   ├── controllers/         # Business logic
-│   ├── middleware/          # Auth, Admin, Error handlers
-│   ├── models/              # Mongoose schemas
-│   ├── routes/              # API routes
-│   ├── utils/               # Token generator
-│   ├── uploads/             # Uploaded images (auto-created)
-│   ├── seed.js              # DB seeder
-│   ├── server.js            # Entry point
-│   └── .env                 # Environment variables
-└── client/                  # React frontend
-    └── src/
-        ├── api/             # Axios API functions
-        ├── components/      # Shared UI components
-        ├── context/         # Auth context
-        └── pages/           # Route pages
+React + Vite
+      │
+      │ HTTP Requests
+      ▼
+Express.js REST API
+      │
+      ▼
+MongoDB Database
+```
+
+The frontend communicates with the Express REST API, which handles authentication, business logic, and database operations.
+
+---
+
+# 📂 Project Structure
+
+```
+SkillBridge/
+│
+├── client/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── server/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── uploads/
+│   ├── seed.js
+│   ├── server.js
+│   └── package.json
+│
+├── PROJECT_DOCUMENTATION.md
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-## 🚀 Setup Instructions
+# 🚀 Installation
 
-### Prerequisites
-- Node.js 18+
-- MongoDB running locally (`mongod`) or a MongoDB Atlas URI
+## Clone Repository
+
+```bash
+git clone <repository-url>
+cd SkillBridge
+```
 
 ---
 
-### 1. Backend Setup
+## Backend Setup
 
 ```bash
 cd server
 npm install
 ```
 
-Edit `.env` (already created) and set your MongoDB URI if needed:
-```
-MONGO_URI=mongodb://localhost:27017/local-worker-connector
-JWT_SECRET=lwc_super_secret_jwt_key_change_in_production
-PORT=5000
-```
+---
 
-**Seed the database** (creates admin user + 8 sample workers):
+## Frontend Setup
+
 ```bash
-npm run seed
+cd ../client
+npm install
 ```
-
-**Start the server:**
-```bash
-npm run dev      # development (with nodemon)
-# or
-npm start        # production
-```
-
-Server runs at: **http://localhost:5000**
 
 ---
 
-### 2. Frontend Setup
+# ⚙ Environment Variables
+
+Create a `.env` file inside the **server** folder.
+
+```
+PORT=5000
+
+MONGO_URI=mongodb://localhost:27017/local-worker-connector
+
+JWT_SECRET=your_secret_key
+
+NODE_ENV=development
+```
+
+---
+
+# ▶ Running the Project
+
+## Start Backend
 
 ```bash
-cd client
-npm install
+cd server
 npm run dev
 ```
 
-Frontend runs at: **http://localhost:5173**
+Backend runs on
+
+```
+http://localhost:5000
+```
 
 ---
 
-## 🔑 Default Credentials (after seeding)
+## Start Frontend
+
+```bash
+cd client
+npm run dev
+```
+
+Frontend runs on
+
+```
+http://localhost:5173
+```
+
+---
+
+# 🌱 Seed Database
+
+```bash
+cd server
+
+npm run seed
+```
+
+This creates
+
+- Admin Account
+- Sample Workers
+- Initial Database Records
+
+---
+
+# 🔑 Demo Credentials
 
 | Role | Phone | Password |
-|------|-------|----------|
-| Admin | `9999999999` | `admin123` |
+|------|---------|----------|
+| Admin | 9999999999 | admin123 |
 
 ---
 
-## 📡 API Endpoints
+# 📡 API Overview
 
-### Auth
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| POST | `/api/auth/register` | Public | Register a new user |
-| POST | `/api/auth/login` | Public | Login and get JWT |
-| GET | `/api/auth/me` | Private | Get current user |
+## Authentication
 
-### Workers
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/api/workers` | Public | Get all workers (filter by `?skill=&location=`) |
-| GET | `/api/workers/:id` | Public | Get single worker |
-| POST | `/api/workers` | Admin | Add a worker |
-| PUT | `/api/workers/:id` | Admin | Update a worker |
-| PATCH | `/api/workers/:id/verify` | Admin | Toggle verification |
-| DELETE | `/api/workers/:id` | Admin | Delete a worker |
+```
+POST   /api/auth/register
 
-### Jobs
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/api/jobs` | Public | Get all job posts |
-| GET | `/api/jobs/:id` | Public | Get single job |
-| POST | `/api/jobs` | Private | Post a new job |
-| PUT | `/api/jobs/:id` | Private | Update a job |
-| DELETE | `/api/jobs/:id` | Private | Delete a job |
+POST   /api/auth/login
+
+GET    /api/auth/me
+```
 
 ---
 
-## 🎨 Pages
+## Workers
 
-| Page | Route | Description |
-|------|-------|-------------|
-| Home | `/` | Browse workers with search and skill filters |
-| Jobs | `/jobs` | View all job postings |
-| Post Job | `/post-job` | Submit a job requirement (login required) |
-| Login | `/login` | Sign in |
-| Register | `/register` | Create account |
-| Admin | `/admin` | Manage workers (admin only) |
+```
+GET     /api/workers
 
----
+GET     /api/workers/:id
 
-## 🔒 Security
+POST    /api/workers
 
-- Passwords hashed with **bcrypt (10 rounds)**
-- Routes protected with **JWT Bearer tokens**
-- Admin routes guarded by role check middleware
-- File upload limited to **images only, max 5 MB**
-- Input validation on both frontend (React Hook Form) and backend
+PUT     /api/workers/:id
+
+PATCH   /api/workers/:id/verify
+
+DELETE  /api/workers/:id
+```
 
 ---
 
-## 🛠️ Troubleshooting
+## Jobs
 
-**MongoDB connection failed:** Make sure MongoDB is running locally or update `MONGO_URI` in `.env`.
+```
+GET     /api/jobs
 
-**Image not loading after upload:** Ensure the `server/uploads/` directory exists (it's auto-created on server start).
+GET     /api/jobs/:id
 
-**401 Unauthorized:** Your token may have expired — log out and log back in.
+POST    /api/jobs
+
+PUT     /api/jobs/:id
+
+DELETE  /api/jobs/:id
+```
+
+---
+
+# 🔒 Security
+
+- JWT Authentication
+- bcrypt Password Hashing
+- Protected Routes
+- Admin Authorization
+- Input Validation
+- Secure API Middleware
+- Image Upload Validation
+
+---
+
+# 🚀 Planned IEEE Research Enhancements
+
+The following features are planned as part of the final-year research contribution:
+
+- AI-Based Worker Recommendation
+- Trust Score System
+- Hyperlocal Worker Matching
+- Explainable Recommendations
+- Booking Management
+- Review & Rating Improvements
+- Smart Search
+- Cloud Image Storage
+- Real-time Notifications
+
+---
+
+# 📚 Documentation
+
+Complete technical documentation is available in
+
+```
+PROJECT_DOCUMENTATION.md
+```
+
+This document contains:
+
+- Complete Architecture
+- API Documentation
+- Folder Structure
+- Authentication Flow
+- Database Models
+- Controller Documentation
+- Development Workflow
+- Project Status
+- Future Development Plan
+
+---
+
+# 👨‍💻 Development Team
+
+**Technical Lead**
+
+- Sanjay Balakrishnan
+
+**Frontend Developer**
+
+- Team Member
+
+**Backend Developer**
+
+- Team Member
+
+---
+
+# 🤝 Contributing
+
+This project follows a feature branch workflow.
+
+1. Create a new branch from `main`
+2. Complete your assigned task
+3. Commit your changes
+4. Push your branch
+5. Create a Pull Request
+6. Wait for review before merging
+
+---
+
+# 📈 Project Status
+
+Current Progress
+
+- Frontend UI – Nearly Complete
+- Backend APIs – Stable
+- Authentication – Complete
+- Worker Management – Complete
+- Job Management – Complete
+- Admin Dashboard – Complete
+- IEEE Research Features – In Progress
+
+---
+
+# 📄 License
+
+This project is developed for **academic and educational purposes** as part of the B.Tech Information Technology curriculum.
+
+---
+
+# ⭐ Acknowledgements
+
+- React
+- Node.js
+- Express.js
+- MongoDB
+- Tailwind CSS
+- Vite
+- JWT
+- Mongoose
+- React Hook Form
+- React Hot Toast
+- Open Source Community
+
+---
+
+## 📞 Contact
+
+**Sanjay Balakrishnan**
+
+B.Tech – Information Technology
+
+MNM Jain Engineering College
+
+GitHub: https://github.com/sanjaybalakrishnangit
