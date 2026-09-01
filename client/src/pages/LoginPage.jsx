@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { login } from '../api/auth'
 import { useAuth } from '../context/AuthContext'
@@ -17,6 +17,7 @@ const LoginPage = () => {
   const [showPwd, setShowPwd] = useState(false)
   const { loginUser } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -25,12 +26,12 @@ const LoginPage = () => {
       const { token, ...userData } = res.data
       loginUser(userData, token)
       toast.success(`Welcome back, ${userData.name}!`)
-      navigate(
+      const from = location.state?.from?.pathname || (
         userData.role === 'admin' ? '/admin' :
         userData.role === 'employee' ? '/my-profile' :
-        '/',
-        { replace: true }
+        '/'
       )
+      navigate(from, { replace: true })
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed. Please try again.')
     } finally {

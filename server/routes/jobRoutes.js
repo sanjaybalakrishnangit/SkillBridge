@@ -28,7 +28,7 @@ const upload = multer({
 
 router.get('/', getJobs);
 router.get('/:id', getJobById);
-router.post('/', optionalProtect, upload.single('image'), createJob);  // Public — no login required
+router.post('/', protect, upload.single('image'), createJob);
 router.put('/:id', protect, upload.single('image'), updateJob);
 router.delete('/:id', protect, deleteJob);
 
