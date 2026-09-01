@@ -92,6 +92,10 @@ const updateJob = async (req, res, next) => {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: 'Job not found' });
 
+    if (req.user.role !== 'admin' && (!job.postedBy || job.postedBy.toString() !== req.user._id.toString())) {
+      return res.status(403).json({ message: 'Not authorized to update this job' });
+    }
+
     const { title, description, location, workingHours, paymentType, phone } = req.body;
 
     if (title !== undefined) job.title = title;
@@ -114,8 +118,14 @@ const updateJob = async (req, res, next) => {
 // @access  Private
 const deleteJob = async (req, res, next) => {
   try {
-    const job = await Job.findByIdAndDelete(req.params.id);
+    const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ message: 'Job not found' });
+
+    if (req.user.role !== 'admin' && (!job.postedBy || job.postedBy.toString() !== req.user._id.toString())) {
+      return res.status(403).json({ message: 'Not authorized to delete this job' });
+    }
+
+    await job.deleteOne();
     res.json({ message: 'Job deleted successfully' });
   } catch (err) {
     next(err);
